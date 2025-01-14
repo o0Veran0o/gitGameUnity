@@ -28,8 +28,8 @@ public class PlayerStats : MonoBehaviour
     private PlayerHandler PlayerHandle;
     void Start()
     {
-        currentHealth = maxHealth / 2;
-        currentSanity = maxSanity / 2;
+        currentHealth = maxHealth;
+        currentSanity = maxSanity;
         inventoryManager = GetComponent<InventoryManager>();
         PlayerHandle = GetComponent<PlayerHandler>();
         if (inventoryManager == null)
