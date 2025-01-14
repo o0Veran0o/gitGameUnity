@@ -175,19 +175,28 @@ public class InventorySlot : MonoBehaviour
         return result;
     }
 
-    public void UseItem ( PlayerStats player )
+    public void UseItem(PlayerStats player)
     {
-        if ( m_IconObject.activeSelf ) {
-         
-            m_Item.UseItem ( player );
-            PlayItemUseSound(m_Item.GetItemName());
+        if (m_IconObject.activeSelf)
+        {
+            // Check ammo for Shotgun *before* playing the sound and using the item
+            if (m_Item.GetItemName() == "Shotgun" && m_Item.GetAmmoCount() <= 0)
+            {
+                // Handle empty shotgun - Play "empty click" sound or show a message
+                Debug.Log("Shotgun is empty!"); // Replace with your empty gun feedback
+                return; // Don't use the item or play the regular sound
+            }
 
-            if ( m_Item.IsConsumable() ) {
-                DropItem();    
+            PlayItemUseSound(m_Item.GetItemName()); // Play sound only if not empty
+
+            m_Item.UseItem(player);
+
+            if (m_Item.IsConsumable())
+            {
+                DropItem();
             }
         }
     }
-
     private void PlayItemUseSound(string itemName)
     {
         AudioClip clipToPlay = null;
